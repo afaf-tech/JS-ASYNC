@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Fetch API</title>
     <script>
+        // 
         function getProductsUrl(keyword) {
             return `https://www.blibli.com/backend/search/products?searchTerm=${keyword}`;
         }
@@ -11,7 +12,7 @@
         function getProducts(keyword) {
             // Code Fetch API Here!
             const url = getProductsUrl(keyword);
-
+            // Fetech itu Returnnya Promise 
             return fetch(url, {
                 method: "GET",
             }).then(function(response){

@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>Async Await</title>
     <script>
+        // Asyn await 
+        // digunakan mempermudah prosespembuatan code PRomise
+        // Membuat kode Asyncronuse dengan gaya syncronuse 
+        // Async digunakan untuk menandakan bahwa Function tersebut adalah async dan mengembalika promise
+        // Await Hanya digunakan untuk mendapatkan value hasil function yang mengembalikan promise .
+        // Await hanya bisa digunakan dalam async function 
         function getProductsUrl(keyword) {
             return `https://www.blibli.com/backend/search/products?searchTerm=${keyword}`;
         }
@@ -41,8 +47,39 @@
             productUl.appendChild(productLi);
         }
 
-        function buttonClick() {
+        async function buttonClick() {
             // Code Async Await Here!
+            // Keep in mind! await hanya bisa di promise 
+            // BEFORE
+            // const promise = getProducts(document.getElementById("keyword").value);
+            // promise
+            //     .then(function (value){
+            //         return value.data.products;
+            //     })
+            //     .then(function (products) {
+            //        // console.log(products);
+            //         clearProducts();
+            //         products.forEach(function (product){
+            //             displayProduct(product);
+                        
+            //         })
+            //     })
+            //     .catch(function(error){
+            //         alert(error.message);
+            //     })
+            //     .finally(function(){
+            //         // function pada finally tidak memerlukan parameter
+            //         // whether successful or not this function will be always executed.
+            //         console.log("selesai memproses promise");
+            //     })
+            
+            // AFTER
+            const data = await getProducts(document.getElementById("keyword").value);
+            const products = value.data.products;
+            clearProducts();
+            products.forEach(product => {
+                displayProduct(product);
+            });
         }
     </script>
 </head>
