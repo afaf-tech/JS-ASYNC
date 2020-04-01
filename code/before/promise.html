@@ -49,32 +49,60 @@
 
         function buttonClick() {
             // data kembalian dari getProducts adalah promise.
-            const promise = getProducts(document.getElementById("keyword").value);
-            promise
-                .then(function (value){
-                    return value.data.products;
-                })
-                .then(function (products) {
-                   // console.log(products);
-                    clearProducts();
-                    products.forEach(function (product){
-                        displayProduct(product);
+            // const promise = getProducts(document.getElementById("keyword").value);
+            // promise
+            //     .then(function (value){
+            //         return value.data.products;
+            //     })
+            //     .then(function (products) {
+            //        // console.log(products);
+            //         clearProducts();
+            //         products.forEach(function (product){
+            //             displayProduct(product);
                         
+            //         })
+            //     })
+            //     .catch(function(error){
+            //         alert(error.message);
+            //     })
+            //     .finally(function(){
+            //         // function pada finally tidak memerlukan parameter
+            //         // whether successful or not this function will be always executed.
+            //         console.log("selesai memproses promise");
+            //     })
+
+            const promise1 = getProducts(document.getElementById("keyword").value);
+            const promise2 = getProducts(document.getElementById("keyword2").value);
+            const promise3 = getProducts(document.getElementById("keyword3").value);
+
+            Promise.all([promise1,promise2,promise3])
+                .then(function(values){
+                    return values.map(value=> value.data.products);
+                })
+                .then(function(values){
+                    clearProducts();
+                    values.forEach(function(products){
+                        products.forEach(function(product){
+                            displayProduct(product);
+                        })
                     })
                 })
-                .catch(function(error){
-                    alert(error.message);
+                .catch(function(Error){
+                    console.log(Error.message);
                 })
                 .finally(function(){
                     // function pada finally tidak memerlukan parameter
                     // whether successful or not this function will be always executed.
-                    console.log("selesai memproses promise");
+                    console.log("selesai memproses semua promise");
                 })
+
         }
     </script>
 </head>
 <body>
 <input type="text" id="keyword">
+<input type="text" id="keyword2">
+<input type="text" id="keyword3">
 <button onclick="buttonClick()">Search Products</button>
 <ul id="products"></ul>
 </body>
