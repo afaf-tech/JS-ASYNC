@@ -8,7 +8,7 @@
             return `https://www.blibli.com/backend/search/products?searchTerm=${keyword}`;
         }
 
-        function getProducts(keyword) {
+        function getProducts(keyword, callbackSuccess, callbackError) {
             // Code AJAX Here!
             const ajax = new XMLHttpRequest();
             //  alasan memakai anonymous function = kemungkinan kita akan 
@@ -16,11 +16,9 @@
             ajax.onload = function(){
                 if(ajax.status === 200){
                     const data = JSON.parse(ajax.responseText);
-                    clearProducts(); // bersihkan html dulu agar tidak ada duplcated data
-                    console.table(data);
-                    displayProducts(data);
+                    callbackSuccess(data);
                 }else{
-                    getProductsError();
+                    callbackError();
                 }
             }
 
@@ -70,7 +68,21 @@
         }
 
         function buttonClick() {
-            getProducts(document.getElementById("keyword").value);
+            // Tampilkan dua list
+            getProducts(document.getElementById("keyword").value, function(data){
+                clearProducts();
+                displayProducts(data);
+            }, function(){
+                getProductsError();
+            });
+            
+            // Tampilkan Table
+            getProducts(document.getElementById("keyword").value, function(data){
+                clearTableProducts();
+                displayTableProducts(data);
+            }, function(){
+                getProductsError();
+            });
             console.log("Success CLick Button");
         }
     </script>
